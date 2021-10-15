@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <p class="lead">File uploaded successfully. You have uploaded an image of</p>
+
+<div class="card-deck">
+    {% for file,inference in result.items() %}
+    <div class="card">
+      <img src="static/uploads/{{ file }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{inference[0]}}!</h5>
+        <p class="card-text"> Confidence: <strong>{{inference[1]}}%</strong> </p>
+        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <p class="mt-5"> <a href="/">Try again</a></p>
+</div>
+
+<div class="text-center">
+    <p class='h6'> Last 5 Preditions</p>
+</div>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">filename</th>
+        <th scope="col">Class Name</th>
+        <th scope="col">Confidence</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i,(file,inference) in prev_results %}
+        <tr>
+            <th scope="row">{{i+1}}</th>
+            <td>{{file}}</td>
+            <td>{{inference[0]}}</td>
+            <td>{{inference[1]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+  <style>
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .card-deck {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .mb-3, .my-3 {
+        margin-bottom: 1rem!important;
+    }
+
+  </style>
+
+{% endblock %}
